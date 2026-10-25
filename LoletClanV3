@@ -1,0 +1,316 @@
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+local PlayerGui = Player:WaitForChild("PlayerGui")
+local UserInputService = game:GetService("UserInputService")
+local StarterGui = game:GetService("StarterGui")
+
+local GUI_WIDTH, GUI_HEIGHT = 400, 360
+local TITLE_HEIGHT, NAV_HEIGHT, FOOTER_HEIGHT = 30, 30, 30
+local BUTTON_HEIGHT, BUTTON_PADDING = 30, 5
+
+-- COLORES
+local YELLOW = Color3.fromRGB(255, 220, 0)
+local BLACK = Color3.fromRGB(0, 0, 0)
+local WHITE = Color3.fromRGB(255, 255, 255)
+
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "loletClanGUI"
+screenGui.ResetOnSpawn = false
+screenGui.Parent = PlayerGui
+
+-- Notificación
+pcall(function()
+    StarterGui:SetCore("SendNotification", {
+        Title = "LoletClanGui",
+        Text = "Join TEAM LOLET Get Free Hack!",
+        Icon = "rbxassetid://95754431779010",
+        Duration = 5
+    })
+end)
+
+-- FONDO PRINCIPAL AMARILLO
+local mainFrame = Instance.new("Frame")
+mainFrame.Size = UDim2.new(0, GUI_WIDTH, 0, GUI_HEIGHT)
+mainFrame.Position = UDim2.new(0.5, -GUI_WIDTH/2, 0.5, -GUI_HEIGHT/2)
+mainFrame.BackgroundColor3 = YELLOW
+mainFrame.BorderSizePixel = 0
+mainFrame.Parent = screenGui
+
+-- BARRA DEL TÍTULO
+local titleBar = Instance.new("Frame")
+titleBar.Size = UDim2.new(1, 0, 0, TITLE_HEIGHT)
+titleBar.BackgroundColor3 = YELLOW
+titleBar.BorderSizePixel = 0
+titleBar.Parent = mainFrame
+
+local titleLabel = Instance.new("TextLabel")
+titleLabel.Size = UDim2.new(1, -30, 1, 0)
+titleLabel.Position = UDim2.new(0, 4, 0, 0)
+titleLabel.BackgroundTransparency = 1
+titleLabel.Text = "LOLET GUI V3 (created by Team lolet)"
+titleLabel.Font = Enum.Font.SourceSansBold
+titleLabel.TextSize = 18
+titleLabel.TextColor3 = WHITE
+titleLabel.TextXAlignment = Enum.TextXAlignment.Left
+titleLabel.Parent = titleBar
+
+-- BOTÓN MINIMIZAR NEGRO
+local minBtn = Instance.new("TextButton")
+minBtn.Size = UDim2.new(0, 30, 1, 0)
+minBtn.Position = UDim2.new(1, -30, 0, 0)
+minBtn.Text = "_"
+minBtn.Font = Enum.Font.SourceSansBold
+minBtn.TextSize = 18
+minBtn.TextColor3 = WHITE
+minBtn.BackgroundColor3 = BLACK
+minBtn.BorderSizePixel = 0
+minBtn.Parent = titleBar
+
+-- LOGO
+local logo = Instance.new("ImageLabel")
+logo.BackgroundTransparency = 1
+logo.Size = UDim2.new(1, -20, 0, 80)
+logo.Position = UDim2.new(0, 10, 0, TITLE_HEIGHT + 5)
+logo.Image = "rbxassetid://95754431779010"
+logo.ScaleType = Enum.ScaleType.Fit
+logo.Parent = mainFrame
+
+-- NAVEGACIÓN
+local navBar = Instance.new("Frame")
+navBar.Size = UDim2.new(1, 0, 0, NAV_HEIGHT)
+navBar.Position = UDim2.new(0, 0, 0, TITLE_HEIGHT + 85)
+navBar.BackgroundColor3 = YELLOW
+navBar.BorderSizePixel = 0
+navBar.Parent = mainFrame
+
+local navButtons = {}
+
+local function createNavButton(name, xPos, callback)
+    local btn = Instance.new("TextButton")
+    btn.Size = UDim2.new(0, 80, 1, 0)
+    btn.Position = UDim2.new(0, xPos, 0, 0)
+    btn.Text = name
+    btn.Font = Enum.Font.SourceSansBold
+    btn.TextSize = 14
+    btn.TextColor3 = WHITE
+    btn.BackgroundColor3 = BLACK
+    btn.BorderSizePixel = 0
+    btn.Parent = navBar
+
+    btn.MouseButton1Click:Connect(callback)
+    navButtons[name] = btn
+end
+
+-- ÁREA DE BOTONES
+local buttonFrame = Instance.new("ScrollingFrame")
+buttonFrame.Size = UDim2.new(
+    1, -10, 0,
+    GUI_HEIGHT - TITLE_HEIGHT - NAV_HEIGHT - FOOTER_HEIGHT - 95
+)
+buttonFrame.Position = UDim2.new(0, 5, 0, TITLE_HEIGHT + NAV_HEIGHT + 90)
+buttonFrame.BackgroundTransparency = 1
+buttonFrame.CanvasSize = UDim2.new(0, 0, 0, 0)
+buttonFrame.ScrollBarThickness = 6
+buttonFrame.Parent = mainFrame
+
+local UIGridLayout = Instance.new("UIGridLayout")
+UIGridLayout.FillDirection = Enum.FillDirection.Horizontal
+UIGridLayout.CellSize = UDim2.new(0, 120, 0, BUTTON_HEIGHT)
+UIGridLayout.CellPadding = UDim2.new(0, BUTTON_PADDING, 0, BUTTON_PADDING)
+UIGridLayout.Parent = buttonFrame
+
+-- PÁGINAS Y SCRIPTS ORIGINALES
+local pages = {
+    ["All"] = {
+        {"Grab knife", "https://pastebin.com/raw/pga80F62"},
+        {"Locust", "https://pastebin.com/raw/yhkSavK7"},
+        {"Verity", "https://pastebin.com/raw/swdUS61x"},
+        {"Horror", "https://pastebin.com/raw/uR8wBvkE"},
+        {"All Seeing Hand", "https://raw.githubusercontent.com/ian49972/SCRIPTS/refs/heads/main/hand"},
+        {"Fly", "https://pastebin.com/raw/PgUF7uEW"},
+        {"Hacker X", "https://raw.githubusercontent.com/ian49972/SCRIPTS/refs/heads/main/Hacker%20X"},
+        {"OCULUS", "https://raw.githubusercontent.com/ian49972/SCRIPTS/refs/heads/main/Oculus"},
+        {"NOOB666 Ectuator", "https://pastebin.com/raw/KrUueRbs"},
+        {"Polygoner", "https://raw.githubusercontent.com/ian49972/SCRIPTS/refs/heads/main/Polygoner"},
+        {"John Doe", "https://pastebin.com/raw/qMJyPgf8"},
+        {"Caducus", "https://pastebin.com/raw/dyLdvHbM"}
+    },
+
+    ["FE"] = {
+        {"John", "https://pastebin.com/raw/aqkRaeBx"},
+        {"Spooky Month", "https://pastebin.com/raw/FZDqg08B"},
+        {"Dance Hub", "https://raw.githubusercontent.com/somethingsimade/KDV3-Fixed/refs/heads/main/KrystalDance3"}
+    },
+
+    ["Baseplant"] = {
+        {"NOOB666 Map", "https://pastebin.com/raw/AeSYdSTL"},
+        {"Nuclear", "https://pastebin.com/raw/eaE1Ed6w"},
+        {"TNT", "https://pastebin.com/raw/GUZRPWhk"},
+        {"Forsaken", "https://pastebin.com/raw/jvgyGJx5"},
+        {"Patrick", "https://pastebin.com/raw/f3AUhJT2"}
+    },
+
+    ["Trolls"] = {
+        {"Grab knife", "https://pastebin.com/raw/pga80F62"},
+        {"Locust", "https://pastebin.com/raw/yhkSavK7"},
+        {"Verity", "https://pastebin.com/raw/swdUS61x"},
+        {"Horror", "https://pastebin.com/raw/uR8wBvkE"},
+        {"Human Tornado", "https://pastebin.com/raw/jUBeXF2E"}
+    }
+}
+
+-- CARGAR PÁGINAS
+local function loadPage(pageName)
+    -- Borrar solo los botones anteriores
+    for _, child in ipairs(buttonFrame:GetChildren()) do
+        if child:IsA("TextButton") then
+            child:Destroy()
+        end
+    end
+
+    -- Todos los botones de navegación permanecen negros
+    for _, btn in pairs(navButtons) do
+        btn.BackgroundColor3 = BLACK
+        btn.TextColor3 = WHITE
+    end
+
+    for _, scriptData in ipairs(pages[pageName]) do
+        local button = Instance.new("TextButton")
+        button.Text = scriptData[1]
+        button.Font = Enum.Font.SourceSans
+        button.TextSize = 14
+        button.TextColor3 = WHITE
+        button.BackgroundColor3 = BLACK
+        button.BorderSizePixel = 0
+        button.Parent = buttonFrame
+
+        button.MouseButton1Click:Connect(function()
+            local success, err = pcall(function()
+                local source = game:HttpGet(scriptData[2], true)
+                assert(type(source) == "string" and #source > 0, "Script vacío")
+                assert(loadstring, "loadstring no está disponible")
+                local fn = assert(loadstring(source))
+                fn()
+            end)
+
+            if not success then
+                warn("Error al cargar " .. scriptData[1] .. ": " .. tostring(err))
+            end
+        end)
+    end
+
+    buttonFrame.CanvasSize = UDim2.new(
+        0, 0, 0,
+        math.ceil(#pages[pageName] / 3) *
+        (BUTTON_HEIGHT + BUTTON_PADDING)
+    )
+end
+
+-- CREAR PESTAÑAS
+local navX = 0
+
+for name, _ in pairs(pages) do
+    createNavButton(name, navX, function()
+        loadPage(name)
+    end)
+
+    navX = navX + 85
+end
+
+-- FOOTER
+local footer = Instance.new("Frame")
+footer.Size = UDim2.new(1, 0, 0, FOOTER_HEIGHT)
+footer.Position = UDim2.new(0, 0, 1, -FOOTER_HEIGHT)
+footer.BackgroundColor3 = YELLOW
+footer.BorderSizePixel = 0
+footer.Parent = mainFrame
+
+local footerLabel = Instance.new("TextLabel")
+footerLabel.Size = UDim2.new(1, 0, 0.5, 0)
+footerLabel.Position = UDim2.new(0, 0, 0, 0)
+footerLabel.BackgroundTransparency = 1
+footerLabel.Text = "Thanks for using n666clan v3!"
+footerLabel.Font = Enum.Font.SourceSansBold
+footerLabel.TextSize = 14
+footerLabel.TextColor3 = WHITE
+footerLabel.TextStrokeTransparency = 0.8
+footerLabel.Parent = footer
+
+-- BOTÓN CLOSE NEGRO
+local closeBtn = Instance.new("TextButton")
+closeBtn.Size = UDim2.new(1, 0, 0.5, 0)
+closeBtn.Position = UDim2.new(0, 0, 0.5, 0)
+closeBtn.Text = "Close"
+closeBtn.Font = Enum.Font.SourceSansBold
+closeBtn.TextSize = 18
+closeBtn.TextColor3 = WHITE
+closeBtn.BackgroundColor3 = BLACK
+closeBtn.BorderSizePixel = 0
+closeBtn.Parent = footer
+
+closeBtn.MouseButton1Click:Connect(function()
+    screenGui:Destroy()
+end)
+
+-- ARRASTRAR GUI
+local dragging = false
+local dragInput
+local dragStart
+local startPos
+
+titleBar.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1
+        or input.UserInputType == Enum.UserInputType.Touch then
+
+        dragging = true
+        dragStart = input.Position
+        startPos = mainFrame.Position
+
+        input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then
+                dragging = false
+            end
+        end)
+    end
+end)
+
+titleBar.InputChanged:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseMovement
+        or input.UserInputType == Enum.UserInputType.Touch then
+        dragInput = input
+    end
+end)
+
+UserInputService.InputChanged:Connect(function(input)
+    if input == dragInput and dragging then
+        local delta = input.Position - dragStart
+
+        mainFrame.Position = startPos + UDim2.new(
+            0, delta.X,
+            0, delta.Y
+        )
+    end
+end)
+
+-- MINIMIZAR
+local minimized = false
+
+minBtn.MouseButton1Click:Connect(function()
+    minimized = not minimized
+
+    local visible = not minimized
+
+    buttonFrame.Visible = visible
+    navBar.Visible = visible
+    footer.Visible = visible
+    logo.Visible = visible
+
+    mainFrame.BackgroundTransparency = minimized and 1 or 0
+    titleBar.BackgroundColor3 = YELLOW
+    minBtn.BackgroundColor3 = BLACK
+    minBtn.TextColor3 = WHITE
+    minBtn.Text = minimized and "□" or "_"
+end)
+
+-- PÁGINA INICIAL
+loadPage("All")
